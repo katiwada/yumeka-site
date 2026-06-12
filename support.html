@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Yumeka</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --card: #0f3460;
+      --accent: #e94560;
+      --accent-soft: #ff6b9d;
+      --text: #ffffff;
+      --text-muted: #a0a0b0;
+      --text-faint: #505070;
+      --radius: 12px;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 0 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--card);
+      margin-bottom: 3rem;
+    }
+
+    .logo-kanji {
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+      color: var(--accent-soft);
+    }
+
+    .logo-latin {
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .page-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 5rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .faq-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: left;
+      padding: 1.1rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .faq-question:hover {
+      color: var(--accent-soft);
+    }
+
+    .faq-arrow {
+      color: var(--text-faint);
+      font-size: 1rem;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 1.5rem 1.1rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--card);
+      padding-top: 1rem;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--card);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .contact-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card a {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.65rem 1.5rem;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-card a:hover {
+      background: var(--accent-soft);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--card);
+      color: var(--text-faint);
+      font-size: 0.8rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    footer a {
+      color: var(--text-faint);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--accent-soft);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-kanji">夢華</div>
+    <div class="logo-latin">Y U M E K A</div>
+    <div class="page-title">Support</div>
+  </header>
+
+  <main>
+
+    <div class="section-label">Account</div>
+    <div class="faq-group">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I reset my password?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          On the login screen, tap <strong>Forgot Password</strong> and enter your email address. You'll receive a reset link — tap it and follow the instructions to set a new password.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I delete my account?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Go to <strong>Profile → Settings → Delete Account</strong>. You'll be asked to confirm before anything is removed. Deleting your account permanently removes all your data, including your library, folders, ratings, and profile. This cannot be undone.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I change my username?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Go to <strong>Profile → Settings</strong> and tap the username field to edit it. Usernames must be unique — you'll be notified if your chosen name is already taken.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-label">Library & Tracking</div>
+    <div class="faq-group">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I add anime to my library?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Tap the <strong>Search</strong> tab and find the anime you want. Open its detail page and tap the watch status button — choosing any status (Watching, Completed, Planned, Dropped, or Paused) adds it to your library.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I create a folder?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Go to the <strong>Library</strong> tab and scroll down to the My Folders section. Tap <strong>New Folder</strong>, give it a name and a color, and it's ready to use. You can add anime to folders from the anime's detail page or by dragging them in the library view.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What do the watch statuses mean?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          <strong>Watching</strong> — currently airing or in progress.<br />
+          <strong>Completed</strong> — finished watching.<br />
+          <strong>Planned</strong> — on your watchlist for later.<br />
+          <strong>Paused</strong> — started but taking a break.<br />
+          <strong>Dropped</strong> — started but stopped watching.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-label">Social</div>
+    <div class="faq-group">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I add friends?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Go to <strong>Profile → Friends</strong> and tap the <strong>Find</strong> tab. Search by username and send a friend request. Once they accept, you'll appear in each other's friend lists and can share folders with each other.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I share a folder?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Open the folder you want to share and tap the share icon in the top right. You can share with any of your friends and choose whether they can view or edit the folder. They'll receive a notification and the folder will appear in their Library under Shared with Me.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I block or report someone?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Visit the user's profile and tap the <strong>···</strong> menu in the top right. From there you can block them (which prevents them from seeing your profile or sending requests) or submit a report. Reports are reviewed by our team.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-label">General</div>
+    <div class="faq-group">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Where does the anime data come from?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Yumeka uses the <a href="https://anilist.co" target="_blank" style="color: var(--accent-soft);">AniList API</a> as its anime database. AniList is a community-maintained database covering thousands of anime titles with detailed metadata, cover art, and more.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Is Yumeka free?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Yes — Yumeka is free to download and use. Premium features may be introduced in a future update, but the core tracking and social features will always be free.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What platforms is Yumeka available on?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-answer">
+          Yumeka is available on iOS and Android. Download it from the App Store or Google Play Store.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-label">Contact Us</div>
+    <div class="contact-card">
+      <p>Can't find what you're looking for? We're happy to help — send us an email and we'll get back to you as soon as we can.</p>
+      <a href="mailto:wada.kati@gmail.com">wada.kati@gmail.com</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <a href="/">yumeka.app</a> &nbsp;·&nbsp; <a href="/privacy.html">Privacy Policy</a>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-question').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.parentElement;
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(el) {
+          el.classList.remove('open');
+        });
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
