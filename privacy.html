@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Yumeka</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --card: #0f3460;
+      --accent: #e94560;
+      --accent-soft: #ff6b9d;
+      --text: #ffffff;
+      --text-muted: #a0a0b0;
+      --text-faint: #505070;
+      --radius: 12px;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 0 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--card);
+      margin-bottom: 3rem;
+    }
+
+    .logo-kanji {
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+      color: var(--accent-soft);
+    }
+
+    .logo-latin {
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .page-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+    }
+
+    .effective-date {
+      font-size: 0.85rem;
+      color: var(--text-faint);
+      margin-top: 0.4rem;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 5rem;
+    }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--card);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      padding-left: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    li { margin-bottom: 0.4rem; }
+
+    a {
+      color: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .highlight {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--card);
+      color: var(--text-faint);
+      font-size: 0.8rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-kanji">夢華</div>
+    <div class="logo-latin">Y U M E K A</div>
+    <div class="page-title">Privacy Policy</div>
+    <div class="effective-date">Effective date: June 12, 2025</div>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>Overview</h2>
+      <p>Yumeka is an anime tracking app that helps you organize your library, rate shows, and share with friends. This policy explains what information we collect, how we use it, and your rights around it.</p>
+      <p>We keep things simple: we collect only what the app needs to function, we do not sell your data, and you can request deletion at any time.</p>
+    </section>
+
+    <section>
+      <h2>Information We Collect</h2>
+      <p>When you create an account and use Yumeka, we collect the following:</p>
+      <ul>
+        <li><span class="highlight">Account information</span> — your email address, username, and display name</li>
+        <li><span class="highlight">Profile content</span> — your bio, profile picture, and favorite anime</li>
+        <li><span class="highlight">Library data</span> — anime you track, your ratings, watch status, notes, tags, and folder organization</li>
+        <li><span class="highlight">Social data</span> — friend connections, folder shares, and notifications</li>
+        <li><span class="highlight">User-generated content</span> — threads and comments you post on anime pages</li>
+      </ul>
+      <p>We do not collect precise location data, payment information, or any data from your contacts or other apps.</p>
+    </section>
+
+    <section>
+      <h2>How We Use Your Information</h2>
+      <ul>
+        <li>To create and maintain your account</li>
+        <li>To power your anime library, folders, ratings, and recommendations</li>
+        <li>To enable social features like friends, folder sharing, and notifications</li>
+        <li>To display threads and community discussion tied to anime</li>
+        <li>To send you in-app notifications (friend requests, shares, etc.)</li>
+        <li>To investigate reports of abuse or policy violations</li>
+      </ul>
+      <p>We do not use your data for advertising, and we do not build advertising profiles.</p>
+    </section>
+
+    <section>
+      <h2>How Data Is Stored</h2>
+      <p>Your data is stored securely using <span class="highlight">Supabase</span>, a hosted database and authentication service. Supabase infrastructure is hosted in the United States. Data is encrypted in transit (HTTPS) and at rest.</p>
+      <p>Profile pictures and folder cover images are stored in Supabase Storage.</p>
+    </section>
+
+    <section>
+      <h2>Third-Party Services</h2>
+      <p>Yumeka uses the following third-party services:</p>
+      <ul>
+        <li><span class="highlight">AniList API</span> — used to retrieve anime metadata (titles, artwork, descriptions, genres). We do not share your personal data with AniList. See <a href="https://anilist.co/terms" target="_blank">AniList's terms</a>.</li>
+        <li><span class="highlight">Supabase</span> — our backend provider for authentication, database, and file storage. See <a href="https://supabase.com/privacy" target="_blank">Supabase's privacy policy</a>.</li>
+      </ul>
+      <p>We do not share your personal information with any other third parties.</p>
+    </section>
+
+    <section>
+      <h2>User-Generated Content</h2>
+      <p>Yumeka allows you to post threads and comments on anime pages. This content is visible to other users of the app. Please do not post personal information in public threads.</p>
+      <p>You can delete your own threads and comments at any time from within the app.</p>
+    </section>
+
+    <section>
+      <h2>Your Rights & Data Deletion</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li>Access the personal data we hold about you</li>
+        <li>Correct inaccurate information in your profile</li>
+        <li>Delete your account and all associated data</li>
+      </ul>
+      <p>To delete your account, go to <span class="highlight">Settings → Delete Account</span> in the app. This permanently removes your account, library, profile, posts, and all associated data. This action cannot be undone.</p>
+      <p>To request a copy of your data or ask any privacy-related question, email us at <a href="mailto:wada.kati@gmail.com">wada.kati@gmail.com</a>.</p>
+    </section>
+
+    <section>
+      <h2>Children's Privacy</h2>
+      <p>Yumeka is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has created an account, please contact us and we will delete it promptly.</p>
+    </section>
+
+    <section>
+      <h2>Changes to This Policy</h2>
+      <p>If we make material changes to this policy, we will update the effective date at the top of this page and notify users through the app where appropriate.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions about this privacy policy or how your data is handled? Reach us at:</p>
+      <p><a href="mailto:wada.kati@gmail.com">wada.kati@gmail.com</a></p>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Yumeka &nbsp;·&nbsp; <a href="mailto:wada.kati@gmail.com">wada.kati@gmail.com</a>
+  </footer>
+
+</body>
+</html>
