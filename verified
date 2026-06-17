@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Verified — Yumeka</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1a1a2e;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background-color: #16213e;
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .kanji {
+      font-size: 56px;
+      color: #e94560;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .app-name {
+      font-size: 13px;
+      letter-spacing: 6px;
+      color: #a0a0b0;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+
+    .check-circle {
+      width: 72px;
+      height: 72px;
+      background-color: #e9456018;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .check-circle svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .body {
+      font-size: 15px;
+      color: #a0a0b0;
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+
+    .body span {
+      color: #ff6b9d;
+      font-weight: 600;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #0f3460;
+      margin-bottom: 28px;
+    }
+
+    .footer {
+      font-size: 13px;
+      color: #505070;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="kanji">夢華</div>
+    <div class="app-name">Y U M E K A</div>
+
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="11" stroke="#e94560" stroke-width="2"/>
+        <path d="M7 12.5l3.5 3.5 6.5-7" stroke="#e94560" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <h1 class="title">Email verified!</h1>
+    <p class="body">
+      Your account is ready. Open the <span>Yumeka app</span> and log in to start building your anime library.
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="footer">
+      If you didn't create a Yumeka account, you can safely ignore this page.
+    </p>
+
+  </div>
+</body>
+</html>
