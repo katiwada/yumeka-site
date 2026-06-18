@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support the Developer — Yumeka</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --card: #0f3460;
+      --accent: #e94560;
+      --accent-soft: #ff6b9d;
+      --text: #ffffff;
+      --text-muted: #a0a0b0;
+      --text-faint: #505070;
+      --radius: 12px;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 0 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 3.5rem 0 2.5rem;
+      border-bottom: 1px solid var(--card);
+      margin-bottom: 3rem;
+    }
+
+    .logo-kanji {
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+      color: var(--accent-soft);
+    }
+
+    .logo-latin {
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .page-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 5rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    /* Hero message */
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--card);
+      border-radius: var(--radius);
+      padding: 2rem 2rem 1.75rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-card .emoji {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Donate options */
+    .donate-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .donate-card {
+      background: var(--surface);
+      border: 1px solid var(--card);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .donate-card:hover {
+      border-color: var(--accent-soft);
+    }
+
+    .donate-card-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .donate-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .donate-label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .donate-sublabel {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    .donate-btn {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .donate-card:hover .donate-btn {
+      background: var(--accent-soft);
+    }
+
+    /* What your support covers */
+    .perks-card {
+      background: var(--surface);
+      border: 1px solid var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-top: 1rem;
+    }
+
+    .perks-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .perks-list li {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .perks-list li .perk-dot {
+      color: var(--accent-soft);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* Note */
+    .note {
+      font-size: 0.82rem;
+      color: var(--text-faint);
+      text-align: center;
+      margin-top: 1.5rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--card);
+      color: var(--text-faint);
+      font-size: 0.8rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    footer a {
+      color: var(--text-faint);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--accent-soft);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-kanji">夢華</div>
+    <div class="logo-latin">Y U M E K A</div>
+    <div class="page-title">Support the Developer</div>
+  </header>
+
+  <main>
+
+    <div class="hero-card">
+      <div class="emoji">♡</div>
+      <h2>Yumeka is free — and will stay that way.</h2>
+      <p>If you're enjoying the app, a small donation helps cover server costs and keeps Yumeka free and ad-free for everyone.</p>
+    </div>
+
+    <div class="section-label">Donate</div>
+    <div class="donate-options">
+
+      <a class="donate-card" href="https://paypal.me/katiwada" target="_blank" rel="noopener">
+        <div class="donate-card-left">
+          <div class="donate-icon">💙</div>
+          <div>
+            <div class="donate-label">Donate via PayPal</div>
+            <div class="donate-sublabel">One-time donation — any amount appreciated</div>
+          </div>
+        </div>
+        <div class="donate-btn">Donate</div>
+      </a>
+
+    </div>
+
+    <div class="section-label">What your support covers</div>
+    <div class="perks-card">
+      <ul class="perks-list">
+        <li><span class="perk-dot">▸</span> Supabase database and storage hosting</li>
+        <li><span class="perk-dot">▸</span> Keeping the app free with no ads</li>
+        <li><span class="perk-dot">▸</span> Ongoing development and bug fixes</li>
+        <li><span class="perk-dot">▸</span> New features and improvements</li>
+      </ul>
+    </div>
+
+    <p class="note">Donations are voluntary and do not unlock any features.<br />Thank you for being part of Yumeka. 夢華</p>
+
+  </main>
+
+  <footer>
+    <a href="/">yumeka.app</a> &nbsp;·&nbsp;
+    <a href="/support.html">Support</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy Policy</a>
+  </footer>
+
+</body>
+</html>
