@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Confirm Email — Yumeka</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -52,7 +51,12 @@
     <div class="kanji">夢華</div>
     <div class="app-name">Y U M E K A</div>
 
-    <!-- CONFIRM: waiting for the user to tap -->
+    <!-- LOADING (shown until the script runs) -->
+    <div id="state-loading" class="state active">
+      <p class="body">Loading…</p>
+    </div>
+
+    <!-- CONFIRM -->
     <div id="state-confirm" class="state">
       <h1 class="title">Confirm your email</h1>
       <p class="body">Tap below to finish setting up your <span>Yumeka</span> account.</p>
@@ -83,80 +87,111 @@
       <p class="note" id="resend-note"></p>
     </div>
 
+    <!-- PAGE PROBLEM (script failed) -->
+    <div id="state-broken" class="state">
+      <h1 class="title">Page error</h1>
+      <p class="error-details" id="broken-details"></p>
+    </div>
+
     <div class="divider"></div>
     <p class="footer">If you didn't create a Yumeka account, you can safely ignore this page.</p>
   </div>
 
   <script>
-    var supabase = window.supabase.createClient(
-      'https://kyontomtxiutflbandlu.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b250b210eGl1dGZsYmFuZGx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MDM5MjcsImV4cCI6MjA5NjI3OTkyN30.DRKe-RKTVNxSISCWJBmp5TV1wtKRjqAoCd1bFWPHag8
-',
-      { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
-    );
-
-    var query = new URLSearchParams(window.location.search);
-    var hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
-    var tokenHash = query.get('token_hash');
-    var type = query.get('type') || 'email';
-
-    function show(id) {
+    // Show any script error on the page itself
+    window.onerror = function (msg) {
       document.querySelectorAll('.state').forEach(function (el) { el.classList.remove('active'); });
-      document.getElementById(id).classList.add('active');
-    }
-    function showError(text) {
-      document.getElementById('error-details').textContent = text;
-      show('state-error');
-    }
-    function clearUrl() {
-      try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
-    }
+      document.getElementById('broken-details').textContent = String(msg);
+      document.getElementById('state-broken').classList.add('active');
+    };
+  </script>
 
-    if (tokenHash) {
-      // New-style link: confirm only when a real person taps the button
-      show('state-confirm');
-      document.getElementById('confirm-btn').addEventListener('click', async function () {
-        this.disabled = true;
-        this.textContent = 'Confirming…';
-        var result = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: type });
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <script>
+    (function () {
+      function show(id) {
+        document.querySelectorAll('.state').forEach(function (el) { el.classList.remove('active'); });
+        document.getElementById(id).classList.add('active');
+      }
+      function showError(text) {
+        document.getElementById('error-details').textContent = text;
+        show('state-error');
+      }
+      function clearUrl() {
+        try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
+      }
+
+      if (!window.supabase || !window.supabase.createClient) {
+        document.getElementById('broken-details').textContent = 'Supabase library did not load.';
+        show('state-broken');
+        return;
+      }
+
+      var sb = window.supabase.createClient(
+        'https://kyontomtxiutflbandlu.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b250b210eGl1dGZsYmFuZGx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MDM5MjcsImV4cCI6MjA5NjI3OTkyN30.DRKe-RKTVNxSISCWJBmp5TV1wtKRjqAoCd1bFWPHag8
+',
+        { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
+      );
+
+      var query = new URLSearchParams(window.location.search);
+      var hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+      var tokenHash = query.get('token_hash');
+      var type = query.get('type') || 'email';
+
+      if (tokenHash) {
+        // New-style link: confirm only when a real person taps the button
+        show('state-confirm');
+        document.getElementById('confirm-btn').addEventListener('click', function () {
+          var btn = this;
+          btn.disabled = true;
+          btn.textContent = 'Confirming…';
+          sb.auth.verifyOtp({ token_hash: tokenHash, type: type }).then(function (result) {
+            clearUrl();
+            if (result.error) {
+              showError('Error: ' + (result.error.code || '') + ' — ' + result.error.message);
+            } else {
+              sb.auth.signOut();
+              show('state-success');
+            }
+          }).catch(function (e) {
+            showError('Error: ' + e.message);
+          });
+        });
+      } else if (hash.get('error') || hash.get('error_code') || query.get('error')) {
+        // Old-style link that Supabase already rejected
+        var code = hash.get('error_code') || query.get('error_code') || hash.get('error') || query.get('error');
+        var desc = (hash.get('error_description') || query.get('error_description') || '').replace(/\+/g, ' ');
         clearUrl();
-        if (result.error) {
-          showError('Error: ' + (result.error.code || '') + ' — ' + result.error.message);
-        } else {
-          await supabase.auth.signOut();
-          show('state-success');
-        }
-      });
-    } else if (hash.get('error') || hash.get('error_code') || query.get('error')) {
-      // Old-style link that Supabase already rejected
-      var code = hash.get('error_code') || query.get('error_code') || hash.get('error') || query.get('error');
-      var desc = (hash.get('error_description') || query.get('error_description') || '').replace(/\+/g, ' ');
-      clearUrl();
-      showError('Error: ' + code + (desc ? ' — ' + desc : ''));
-    } else if (hash.get('access_token') || query.get('code')) {
-      // Old-style link that worked
-      clearUrl();
-      show('state-success');
-    } else {
-      showError('No confirmation link was found.');
-    }
+        showError('Error: ' + code + (desc ? ' — ' + desc : ''));
+      } else if (hash.get('access_token') || query.get('code')) {
+        // Old-style link that worked
+        clearUrl();
+        show('state-success');
+      } else {
+        showError('No confirmation link was found.');
+      }
 
-    document.getElementById('resend-btn').addEventListener('click', async function () {
-      var email = document.getElementById('resend-email').value.trim();
-      var note = document.getElementById('resend-note');
-      if (!email) { note.textContent = 'Please enter your email.'; return; }
-      this.disabled = true;
-      note.textContent = 'Sending…';
-      var result = await supabase.auth.resend({
-        type: 'signup',
-        email: email,
-        options: { emailRedirectTo: 'https://yumeka.app/verified' }
+      document.getElementById('resend-btn').addEventListener('click', function () {
+        var btn = this;
+        var email = document.getElementById('resend-email').value.trim();
+        var note = document.getElementById('resend-note');
+        if (!email) { note.textContent = 'Please enter your email.'; return; }
+        btn.disabled = true;
+        note.textContent = 'Sending…';
+        sb.auth.resend({
+          type: 'signup',
+          email: email,
+          options: { emailRedirectTo: 'https://yumeka.app/verified' }
+        }).then(function (result) {
+          btn.disabled = false;
+          note.textContent = result.error
+            ? 'Could not send: ' + result.error.message
+            : 'Sent! Check your inbox and use the newest email.';
+        });
       });
-      this.disabled = false;
-      note.textContent = result.error
-        ? 'Could not send: ' + result.error.message
-        : 'Sent! Check your inbox and use the newest email.';
-    });
+    })();
   </script>
 </body>
 </html>
