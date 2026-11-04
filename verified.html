@@ -3,212 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Confirmation — Yumeka</title>
+  <title>Confirm Email — Yumeka</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background-color: #1a1a2e;
-      color: #ffffff;
+      background-color: #1a1a2e; color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;
     }
-
     .card {
-      background-color: #16213e;
-      border-radius: 20px;
-      padding: 48px 40px;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+      background-color: #16213e; border-radius: 20px; padding: 48px 40px;
+      max-width: 420px; width: 100%; text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.4);
     }
-
-    .kanji {
-      font-size: 56px;
-      color: #e94560;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .app-name {
-      font-size: 13px;
-      letter-spacing: 6px;
-      color: #a0a0b0;
-      font-weight: 700;
-      margin-bottom: 40px;
-    }
-
+    .kanji { font-size: 56px; color: #e94560; line-height: 1; margin-bottom: 4px; }
+    .app-name { font-size: 13px; letter-spacing: 6px; color: #a0a0b0; font-weight: 700; margin-bottom: 40px; }
     .status-circle {
-      width: 72px;
-      height: 72px;
-      background-color: #e9456018;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
+      width: 72px; height: 72px; background-color: #e9456018; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;
     }
-
-    .status-circle svg {
-      width: 36px;
-      height: 36px;
-    }
-
+    .status-circle svg { width: 36px; height: 36px; }
     .state { display: none; }
     .state.active { display: block; }
-
-    .title {
-      font-size: 22px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 12px;
+    .title { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+    .body { font-size: 15px; color: #a0a0b0; line-height: 1.6; margin-bottom: 28px; }
+    .body span { color: #ff6b9d; font-weight: 600; }
+    .btn {
+      width: 100%; padding: 14px; border: none; border-radius: 12px;
+      background-color: #e94560; color: #ffffff; font-size: 16px; font-weight: 700; cursor: pointer;
     }
-
-    .body {
-      font-size: 15px;
-      color: #a0a0b0;
-      line-height: 1.6;
-      margin-bottom: 36px;
+    .btn:disabled { opacity: 0.6; cursor: default; }
+    .input {
+      width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px;
+      border: 1px solid #0f3460; background-color: #1a1a2e; color: #ffffff; font-size: 16px;
     }
-
-    .body span {
-      color: #ff6b9d;
-      font-weight: 600;
-    }
-
     .error-details {
-      font-family: ui-monospace, Menlo, Consolas, monospace;
-      font-size: 12px;
-      color: #a0a0b0;
-      background-color: #1a1a2e;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin: -20px 0 36px;
-      word-break: break-word;
+      font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: #a0a0b0;
+      background-color: #1a1a2e; border-radius: 10px; padding: 10px 12px; margin-bottom: 24px; word-break: break-word;
     }
-
-    .divider {
-      height: 1px;
-      background-color: #0f3460;
-      margin-bottom: 28px;
-    }
-
-    .footer {
-      font-size: 13px;
-      color: #505070;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 380px) {
-      .card { padding: 40px 24px; }
-    }
+    .note { font-size: 14px; color: #ff6b9d; margin-top: 12px; min-height: 20px; }
+    .divider { height: 1px; background-color: #0f3460; margin: 28px 0; }
+    .footer { font-size: 13px; color: #505070; line-height: 1.6; }
+    @media (max-width: 380px) { .card { padding: 40px 24px; } }
   </style>
 </head>
 <body>
   <div class="card">
-
     <div class="kanji">夢華</div>
     <div class="app-name">Y U M E K A</div>
 
-    <!-- SUCCESS: Supabase confirmed the email -->
+    <!-- CONFIRM: waiting for the user to tap -->
+    <div id="state-confirm" class="state">
+      <h1 class="title">Confirm your email</h1>
+      <p class="body">Tap below to finish setting up your <span>Yumeka</span> account.</p>
+      <button id="confirm-btn" class="btn">Confirm my email</button>
+    </div>
+
+    <!-- SUCCESS -->
     <div id="state-success" class="state">
       <div class="status-circle">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="11" stroke="#e94560" stroke-width="2"/>
-          <path d="M7 12.5l3.5 3.5 6.5-7" stroke="#e94560" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#e94560" stroke-width="2"/>
+        <path d="M7 12.5l3.5 3.5 6.5-7" stroke="#e94560" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <h1 class="title">Email verified!</h1>
-      <p class="body">
-        Your account is ready. Open the <span>Yumeka app</span> and log in to start building your anime library.
-      </p>
+      <p class="body">Your account is ready. Open the <span>Yumeka app</span> and log in to start building your anime library.</p>
     </div>
 
-    <!-- ERROR: Supabase rejected the link -->
+    <!-- ERROR + RESEND -->
     <div id="state-error" class="state">
       <div class="status-circle">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="11" stroke="#e94560" stroke-width="2"/>
-          <path d="M12 6.5v7" stroke="#e94560" stroke-width="2.2" stroke-linecap="round"/>
-          <circle cx="12" cy="17" r="1.3" fill="#e94560"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#e94560" stroke-width="2"/>
+        <path d="M12 6.5v7" stroke="#e94560" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.3" fill="#e94560"/></svg>
       </div>
       <h1 class="title">Confirmation didn't go through</h1>
-      <p class="body" id="error-message">
-        We couldn't confirm your email. Open the <span>Yumeka app</span> and request a new confirmation email.
-      </p>
+      <p class="body">Enter your email and we'll send you a fresh confirmation link.</p>
       <p class="error-details" id="error-details"></p>
-    </div>
-
-    <!-- UNKNOWN: page opened without any result from Supabase -->
-    <div id="state-unknown" class="state">
-      <div class="status-circle">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="11" stroke="#e94560" stroke-width="2"/>
-          <path d="M9.2 9.3a2.9 2.9 0 0 1 5.6 1c0 1.9-2.8 2.4-2.8 4.2" stroke="#e94560" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="12" cy="17.6" r="1.2" fill="#e94560"/>
-        </svg>
-      </div>
-      <h1 class="title">Nothing to confirm here</h1>
-      <p class="body">
-        This page didn't receive a confirmation result. Open the <span>Yumeka app</span> and try logging in. If it says your email isn't confirmed, request a new confirmation email.
-      </p>
+      <input id="resend-email" class="input" type="email" placeholder="you@example.com" autocomplete="email" />
+      <button id="resend-btn" class="btn">Send a new link</button>
+      <p class="note" id="resend-note"></p>
     </div>
 
     <div class="divider"></div>
-
-    <p class="footer">
-      If you didn't create a Yumeka account, you can safely ignore this page.
-    </p>
-
+    <p class="footer">If you didn't create a Yumeka account, you can safely ignore this page.</p>
   </div>
 
   <script>
-    (function () {
-      // Supabase sends the result in the URL hash (#...) and sometimes the query (?...)
-      var hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
-      var query = new URLSearchParams(window.location.search);
-      function get(key) { return hash.get(key) || query.get(key); }
+    var supabase = window.supabase.createClient(
+      'https://kyontomtxiutflbandlu.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b250b210eGl1dGZsYmFuZGx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MDM5MjcsImV4cCI6MjA5NjI3OTkyN30.DRKe-RKTVNxSISCWJBmp5TV1wtKRjqAoCd1bFWPHag8
+',
+      { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
+    );
 
-      var error = get('error');
-      var errorCode = get('error_code');
-      var errorDescription = get('error_description');
-      var accessToken = get('access_token');
-      var code = get('code');
+    var query = new URLSearchParams(window.location.search);
+    var hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    var tokenHash = query.get('token_hash');
+    var type = query.get('type') || 'email';
 
-      function showState(id) {
-        document.getElementById(id).classList.add('active');
-      }
+    function show(id) {
+      document.querySelectorAll('.state').forEach(function (el) { el.classList.remove('active'); });
+      document.getElementById(id).classList.add('active');
+    }
+    function showError(text) {
+      document.getElementById('error-details').textContent = text;
+      show('state-error');
+    }
+    function clearUrl() {
+      try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
+    }
 
-      if (error || errorCode) {
-        if (errorCode === 'otp_expired') {
-          document.getElementById('error-message').innerHTML =
-            'This link has expired or was replaced by a newer email. Open the <span>Yumeka app</span> and request a new confirmation email.';
+    if (tokenHash) {
+      // New-style link: confirm only when a real person taps the button
+      show('state-confirm');
+      document.getElementById('confirm-btn').addEventListener('click', async function () {
+        this.disabled = true;
+        this.textContent = 'Confirming…';
+        var result = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: type });
+        clearUrl();
+        if (result.error) {
+          showError('Error: ' + (result.error.code || '') + ' — ' + result.error.message);
+        } else {
+          await supabase.auth.signOut();
+          show('state-success');
         }
-        var details = 'Error: ' + (errorCode || error);
-        if (errorDescription) details += ' — ' + errorDescription.replace(/\+/g, ' ');
-        document.getElementById('error-details').textContent = details;
-        showState('state-error');
-      } else if (accessToken || code) {
-        showState('state-success');
-      } else {
-        showState('state-unknown');
-      }
+      });
+    } else if (hash.get('error') || hash.get('error_code') || query.get('error')) {
+      // Old-style link that Supabase already rejected
+      var code = hash.get('error_code') || query.get('error_code') || hash.get('error') || query.get('error');
+      var desc = (hash.get('error_description') || query.get('error_description') || '').replace(/\+/g, ' ');
+      clearUrl();
+      showError('Error: ' + code + (desc ? ' — ' + desc : ''));
+    } else if (hash.get('access_token') || query.get('code')) {
+      // Old-style link that worked
+      clearUrl();
+      show('state-success');
+    } else {
+      showError('No confirmation link was found.');
+    }
 
-      // Clear tokens/codes from the address bar so they aren't left in browser history
-      if (window.location.hash || window.location.search) {
-        try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
-      }
-    })();
+    document.getElementById('resend-btn').addEventListener('click', async function () {
+      var email = document.getElementById('resend-email').value.trim();
+      var note = document.getElementById('resend-note');
+      if (!email) { note.textContent = 'Please enter your email.'; return; }
+      this.disabled = true;
+      note.textContent = 'Sending…';
+      var result = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+        options: { emailRedirectTo: 'https://yumeka.app/verified' }
+      });
+      this.disabled = false;
+      note.textContent = result.error
+        ? 'Could not send: ' + result.error.message
+        : 'Sent! Check your inbox and use the newest email.';
+    });
   </script>
 </body>
 </html>
